@@ -1,0 +1,58 @@
+import heapq
+
+start = [1,2,3,
+         4,0,6,
+         7,5,8]
+
+goal = [0,1,2,
+        3,4,5,
+        6,7,8]
+
+def heuristic(state):
+    distance = 0
+
+    for num in range(0,9):
+        i=state.index(num)
+        j=goal.index(num)
+
+        x1,y1=i//3,i%3
+        x2,y2=j//3,j%3
+
+        distance += abs(x1-x2)+abs(y1-y2)
+    return distance
+
+def astar(start):
+
+    visited = []
+    heap = []
+
+    heapq.heappush(heap,(heuristic(start),0,start))
+
+    while heap:
+
+        f,g,current = heapq.heappop(heap)
+        print("CURRENT STATE :")
+
+        for i in range(0,9,3):
+            print(current[i:i+3])
+
+        if current == goal :
+            print('solution found')
+            return
+        visited.append(current)
+
+        zero = current.index(0)
+        moves = [3,-3,1,-1]
+        for move in moves :
+            new = zero + move
+            if 0<= new <9:
+             temp = current[:]
+
+             temp[zero],temp[new]=temp[new],temp[zero]
+
+             if temp not in visited :
+                 
+                 gnew = g+1
+                 fnew = gnew + heuristic(temp)
+                 heapq.heappush(heap,(fnew,gnew,temp))
+astar(start)
