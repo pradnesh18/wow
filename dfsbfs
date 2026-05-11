@@ -1,0 +1,48 @@
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E'] }
+
+#DFS using stack 
+
+def dfs(start):
+    stack = []
+    visited = set()
+    stack.append(start)
+    print("DFS TRAVERSAL : ")
+
+    while stack :
+        node = stack.pop()
+
+        if node not in visited:
+          visited.add(node)
+          print(node, end=" ")
+
+          for neighbours in graph[node]:
+              if neighbours not in  visited:
+                stack.append(neighbours)
+
+dfs('A')
+
+from collections import deque
+def bfs(start):
+   queue = deque()
+   visited = set()
+   queue.append(start)
+   visited.add(start)
+   print('\n BFS TRAVERSAL :')  
+   while queue:
+      node = queue.popleft()
+
+      
+      print(node, end=" ")
+
+      for neighbours in graph[node]:
+            if neighbours not in visited:
+               visited.add(neighbours)
+               queue.append(neighbours)
+
+bfs('A')
