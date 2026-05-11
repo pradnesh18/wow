@@ -1,0 +1,62 @@
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C', 'D'],
+    'C': ['A', 'B', 'D'],
+    'D': ['B', 'C']
+}
+
+colors = ['Red', 'Green', 'Blue']
+
+result = {}
+
+
+# Check whether color is safe
+def isSafe(node, color):
+
+    for neighbour in graph[node]:
+
+        if neighbour in result and result[neighbour] == color:
+
+            return False
+
+    return True
+
+
+# Backtracking function
+def solve(node_index):
+
+    nodes = list(graph.keys())
+
+    # All nodes colored
+    if node_index == len(nodes):
+
+        return True
+
+    node = nodes[node_index]
+
+    # Try every color
+    for color in colors:
+
+        if isSafe(node, color):
+
+            result[node] = color
+
+            # Recursive call
+            if solve(node_index + 1):
+
+                return True
+
+            # Backtracking
+            result[node] = None
+
+    return False
+
+
+# Run
+solve(0)
+
+print("Graph Coloring:\n")
+
+for node in result:
+
+    print(node, "→", result[node])
