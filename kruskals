@@ -1,0 +1,54 @@
+# Kruskal's Algorithm
+
+# Edges: (weight, vertex1, vertex2)
+edges = [
+    (1, 'A', 'B'),
+    (3, 'A', 'C'),
+    (2, 'B', 'C'),
+    (4, 'B', 'D'),
+    (5, 'C', 'D')
+]
+
+# Sort edges by weight
+edges.sort()
+
+parent = {}
+
+
+# Find parent
+def find(node):
+
+    if parent[node] == node:
+
+        return node
+
+    return find(parent[node])
+
+
+# Union nodes
+def union(a, b):
+
+    rootA = find(a)
+    rootB = find(b)
+
+    parent[rootA] = rootB
+
+
+# Initialize parent
+vertices = ['A', 'B', 'C', 'D']
+
+for v in vertices:
+
+    parent[v] = v
+
+
+print("Minimum Spanning Tree:\n")
+
+# Kruskal Algorithm
+for weight, u, v in edges:
+
+    if find(u) != find(v):
+
+        union(u, v)
+
+        print(u, "--", v, "=", weight)
