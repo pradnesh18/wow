@@ -1,0 +1,46 @@
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
+
+# Create chatbot
+bot = ChatBot("CustomerSupportBot")
+
+# Train with basic corpus
+trainer = ChatterBotCorpusTrainer(bot)
+trainer.train("chatterbot.corpus.english")
+
+print("Customer Support Chatbot Ready (type 'exit' to stop)\n")
+
+
+while True:
+
+    user = input("You: ").lower()
+
+    # Exit condition
+    if user == "exit":
+        print("Bot: Thank you for contacting support. Goodbye!")
+        break
+
+    # ---- CUSTOM CUSTOMER SERVICE RULES ----
+
+    elif "price" in user:
+        print("Bot: Our products start from ₹500 and vary by category.")
+
+    elif "delivery" in user:
+        print("Bot: Delivery takes 3–5 business days.")
+
+    elif "refund" in user:
+        print("Bot: Refunds are processed within 7 working days after approval.")
+
+    elif "order" in user:
+        print("Bot: You can track your order using your order ID on our website.")
+
+    elif "contact" in user or "support" in user:
+        print("Bot: You can contact us at support@company.com or call 1800-123-456.")
+
+    elif "complaint" in user:
+        print("Bot: Sorry for the inconvenience. Please share your issue, we will help you.")
+
+    # ---- AI RESPONSE (fallback) ----
+    else:
+        response = bot.get_response(user)
+        print("Bot:", response)
